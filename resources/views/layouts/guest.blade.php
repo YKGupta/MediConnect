@@ -14,11 +14,44 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
+    <style>
+        .guest-container{
+            width: 100%;
+            height: calc(100vh - 60px);
+            background-image: url('/bg.png');
+            background-color: #FEA194;
+            background-size: contain;
+            background-position: left;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            color: white;
+        }
+
+        .guest-container > footer{
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color:rgba(255, 255, 255, 0.7);
+            position: absolute;
+            bottom: 0;
+            padding: 10px 0px;
+        }
+    </style>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.guest-navigation')
 
-            {{ $slot }}
+            <div class="guest-container">
+                {{ $slot }}
+
+                <!-- Footer -->
+                <footer>
+                    &copy; {{ date('Y') }} MediConnect. All rights reserved.
+                </footer>
+            </div>
         </div>
     </body>
 </html>
