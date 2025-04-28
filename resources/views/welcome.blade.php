@@ -1,24 +1,90 @@
+<style>
+    .guest-welcome-container{
+        width: 100%;
+        height: calc(100vh - 60px);
+        background-image: url('bg.png');
+        background-color: #FEA194;
+        background-size: contain;
+        background-position: left;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        color: white;
+    }
+
+    .guest-welcome-container .content{
+        width: 50%;
+        padding: 0px 10%;
+    }
+
+    .guest-welcome-container .content h1{
+        font-size: 72px;
+        font-weight: bold;
+    }
+
+    .guest-welcome-container .content h1, .guest-welcome-container .content p{
+        text-align: center;
+    }
+
+    .guest-welcome-container .content div{
+        margin: 20px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .guest-welcome-container a{
+        background: transparent;
+        border: 1px solid white;
+        padding: 7px 10px;
+        border-radius: 7px;
+        color: white;
+        font-weight: 500;
+        transition: all 0.25s;
+    }
+
+    .guest-welcome-container a:hover{
+        background-color:rgba(253, 145, 131, 0.49);
+    }
+
+    .guest-welcome-container > footer{
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        color:rgba(255, 255, 255, 0.7);
+        position: absolute;
+        bottom: 0;
+        padding: 10px 0px;
+    }
+</style>
+
 <x-guest-layout>
-    <div class="min-h-screen flex flex-col bg-gradient-to-br from-blue-100 to-blue-200 dark:bg-gradient-to-br dark:from-gray-800 dark:to-gray-900 px-6">
+    <div class="guest-welcome-container">
         
         <!-- Hero Section -->
-        <div class="flex-grow flex flex-col justify-center items-center text-center py-12">
-            <h1 class="text-4xl md:text-5xl font-bold text-blue-900 dark:text-white mb-4">
+        <div class="content">
+            <h1>
                 MediConnect
             </h1>
-            <p class="text-lg md:text-xl text-gray-800 dark:text-gray-200 mb-8 max-w-2xl">
+            <p>
                 Fast and reliable emergency support. Connect with nearby medical facilities instantly.
             </p>
 
-            <div class="flex flex-col sm:flex-row gap-4">
+            <div>
                 @auth
-                    <a href="{{ route('emergency.create') }}"
-                       class="inline-block bg-blue-700 hover:bg-blue-800 text-white font-semibold text-base py-3 px-8 rounded-lg shadow-lg transition-all !bg-blue-700 !text-white">
-                        File a Medical Emergency
-                    </a>
+                    @if (auth()->user()->role === 'admin')
+                        <a href="{{ route('admin.dashboard') }}">
+                            Go to Admin Dashboard
+                        </a>
+                    @else
+                        <a href="{{ route('emergency.create') }}">
+                            File a Medical Emergency
+                        </a>
+                    @endif
                 @else
-                    <a href="{{ route('login') }}"
-                       class="inline-block bg-green-700 hover:bg-green-800 text-white font-semibold text-base py-3 px-8 rounded-lg shadow-lg transition-all !bg-green-700 !text-white">
+                    <a href="{{ route('login') }}">
                         Login to Report Emergency
                     </a>
                 @endauth
@@ -26,7 +92,7 @@
         </div>
 
         <!-- Footer -->
-        <footer class="text-center py-4 text-gray-600 dark:text-gray-400 text-sm">
+        <footer>
             &copy; {{ date('Y') }} MediConnect. All rights reserved.
         </footer>
     </div>
