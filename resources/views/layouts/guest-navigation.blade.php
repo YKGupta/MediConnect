@@ -1,3 +1,11 @@
+@php
+    if (auth()->check()) {
+        $link = auth()->user()->role === 'admin' ? route('admin.dashboard') : route('dashboard');
+    } else {
+        $link = route('login');
+    }
+@endphp
+
 <style>
     .guest-navbar{
         width: 100%;
@@ -46,12 +54,7 @@
     <!-- Right Side: Login & Sign Up Buttons -->
     <div class="right">
         @auth
-            <a href="@if (auth()->user()->role === 'admin') 
-                        {{ route('admin.dashboard') }}
-                    @else
-                        {{ route('dashboard') }}
-                    @endif
-                    ">
+            <a href="{{ $link }}">
                 Dashboard
             </a>
         @else
